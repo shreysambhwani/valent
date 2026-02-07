@@ -490,6 +490,11 @@
 
     noBtn.addEventListener("click", e => e.preventDefault());
 
+    /* ---------- MUSIC ---------- */
+    const music = new Audio("oliviadean.m4a");
+    music.loop = true;
+    music.volume = 0.4;
+
     /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
@@ -497,6 +502,7 @@
       result.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
+      music.play();
     });
 
     /* ---------- SHOW ITINERARY ---------- */
