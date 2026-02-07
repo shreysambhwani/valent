@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
+  <title>For Archita 💕</title>
 
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -30,6 +30,13 @@
       padding: 16px;
     }
 
+    /* Allow scrolling once itinerary is revealed */
+    body.scrollable {
+      overflow-y: auto;
+      align-content: start;
+      padding-bottom: 60px;
+    }
+
     /* FULL-SCREEN CONFETTI CANVAS */
     #confettiCanvas {
       position: fixed;
@@ -40,6 +47,29 @@
       z-index: 9999;
     }
 
+    /* FLOATING HEARTS BACKGROUND */
+    .floating-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -30px;
+      opacity: 0.13;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0.13; }
+      50%  { opacity: 0.22; }
+      100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* -------- CARD -------- */
     .card {
       width: min(720px, 92vw);
       padding: 26px 22px;
@@ -48,13 +78,16 @@
       border-radius: 22px;
       text-align: center;
       box-shadow: 0 18px 60px rgba(0,0,0,.15);
+      position: relative;
+      z-index: 1;
     }
 
     .art {
-      width: min(260px, 80vw);
+      width: min(220px, 55vw);
       margin: 0 auto 10px;
       display: block;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.10));
+      border-radius: 16px;
     }
 
     h1 {
@@ -70,7 +103,7 @@
       touch-action: none;
     }
 
-    button {
+    .zone-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -101,10 +134,12 @@
 
     .hint {
       margin-top: 10px;
-      font-size: 13px;
-      opacity: .7;
+      font-size: 15px;
+      color: #ff3b7a;
+      font-weight: 500;
     }
 
+    /* -------- RESULT (after Yes) -------- */
     .result {
       display: none;
       margin-top: 18px;
@@ -116,15 +151,142 @@
       margin: 10px 0;
     }
 
-    .fireworks {
+    .celebration-gif {
       width: min(380px, 90vw);
       margin: 0 auto;
       display: block;
+      border-radius: 12px;
+    }
+
+    .next-btn {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 999px;
+      border: none;
+      background: var(--yes);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255,59,122,.3);
+      transition: background .15s ease, transform .15s ease;
+    }
+    .next-btn:hover {
+      background: var(--yesHover);
+      transform: scale(1.05);
+    }
+
+    /* -------- ITINERARY -------- */
+    .itinerary-section {
+      display: none;
+      width: min(720px, 92vw);
+      margin: 30px auto 0;
+      padding: 30px 22px 36px;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      text-align: center;
+      box-shadow: 0 18px 60px rgba(0,0,0,.15);
+      position: relative;
+      z-index: 1;
+      animation: pop .4s ease;
+    }
+
+    .itinerary-section .art {
+      width: min(120px, 35vw);
+      margin-bottom: 8px;
+    }
+
+    .itinerary-section h2 {
+      font-size: clamp(24px, 4vw, 38px);
+      margin: 0 0 4px;
+      color: #333;
+    }
+
+    .itinerary-date {
+      font-size: 16px;
+      color: #ff3b7a;
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
+
+    .paw-divider {
+      margin: 14px 0;
+      font-size: 16px;
+      letter-spacing: 8px;
+      opacity: .35;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      max-width: 480px;
+      margin: 0 auto;
+      text-align: left;
+      padding-left: 34px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      background: linear-gradient(to bottom, #ff3b7a, #ffd6e7);
+      border-radius: 3px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 26px;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 5px;
+      width: 13px;
+      height: 13px;
+      background: #ff3b7a;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(255,59,122,.25);
+    }
+
+    .timeline-item .time {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ff3b7a;
+      letter-spacing: .4px;
+    }
+
+    .timeline-item .event-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #333;
+      margin: 2px 0 1px;
+    }
+
+    .timeline-item .event-desc {
+      font-size: 14px;
+      color: #777;
+      line-height: 1.4;
+    }
+
+    .itinerary-footer {
+      margin-top: 18px;
+      font-size: 14px;
+      color: #aaa;
     }
 
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      to   { transform: scale(1);   opacity: 1; }
     }
   </style>
 </head>
@@ -132,80 +294,104 @@
 <body>
   <canvas id="confettiCanvas"></canvas>
 
-  <main class="card">
-    <!-- ANIMAL WITH HEART -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#f7c7a1"/>
-          <stop offset="1" stop-color="#f2a97b"/>
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d7d"/>
-          <stop offset="1" stop-color="#ff1f68"/>
-        </linearGradient>
-      </defs>
+  <!-- Subtle floating hearts in background -->
+  <div class="floating-hearts" id="floatingHearts"></div>
 
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
+  <!-- ====== MAIN CARD ====== -->
+  <main class="card" id="mainCard">
+    <img class="art" src="pua.png" alt="Pua the cat" />
 
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
-
-      <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
-      <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
-
-      <circle cx="160" cy="130" r="8"/>
-      <circle cx="220" cy="130" r="8"/>
-
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z"
-            fill="#ff7aa2"/>
-    </svg>
-
-    <h1>nirali will you be my valentine?</h1>
+    <h1>archita will you be my valentine?</h1>
 
     <section class="button-zone" id="zone">
-      <button id="yesBtn">Yes</button>
-      <button id="noBtn">No</button>
+      <button class="zone-btn" id="yesBtn">Yes</button>
+      <button class="zone-btn" id="noBtn">No</button>
     </section>
 
-    <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+    <div class="hint" id="hint">I love you so much 💕❤️</div>
 
     <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
+      <h2>Lets goo!! 🎉🥳</h2>
       <img
-        class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks"
+        class="celebration-gif"
+        src="https://media.giphy.com/media/ORjfgiG9ZtxcQQwZzv/giphy.gif"
+        alt="Celebration dance"
       />
+      <br />
+      <button class="next-btn" id="nextBtn">See what's next →</button>
     </section>
   </main>
 
+  <!-- ====== ITINERARY CARD ====== -->
+  <section class="itinerary-section" id="itinerary">
+    <img class="art" src="pua.png" alt="Pua the cat" />
+    <h2>Our Valentine's Day 💝</h2>
+    <p class="itinerary-date">Saturday, February 14th</p>
+
+    <div class="paw-divider">🐾 🐾 🐾</div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time">🌅 10:00 AM</div>
+        <div class="event-title">Drive to Santa Cruz</div>
+        <div class="event-desc">Road trip down the coast — good music, snacks & vibes</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time">🏖️ 11:30 AM</div>
+        <div class="event-title">Santa Cruz Beach Boardwalk</div>
+        <div class="event-desc">Walk along the boardwalk, rides & arcade games</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time">🌊 2:00 PM</div>
+        <div class="event-title">Natural Bridges State Beach</div>
+        <div class="event-desc">Explore the tide pools & take cute pics by the arch</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="time">🍽️ 6:30 PM</div>
+        <div class="event-title">Valentine's Dinner</div>
+        <div class="event-desc">A special dinner to end the perfect day together</div>
+      </div>
+    </div>
+
+    <div class="paw-divider">🐾 🐾 🐾</div>
+    <p class="itinerary-footer">Made with love for you, Archita 💕</p>
+  </section>
+
   <script>
-    const zone = document.getElementById("zone");
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const result = document.getElementById("result");
-    const hint = document.getElementById("hint");
+    const zone    = document.getElementById("zone");
+    const yesBtn  = document.getElementById("yesBtn");
+    const noBtn   = document.getElementById("noBtn");
+    const result  = document.getElementById("result");
+    const hint    = document.getElementById("hint");
+    const nextBtn = document.getElementById("nextBtn");
+
+    /* ---------- FLOATING HEARTS ---------- */
+    (function spawnHearts() {
+      const box = document.getElementById("floatingHearts");
+      const pool = ["💕","❤️","💗","🩷","🤍"];
+      for (let i = 0; i < 10; i++) {
+        const s = document.createElement("span");
+        s.className = "floating-heart";
+        s.textContent = pool[Math.floor(Math.random() * pool.length)];
+        s.style.left = Math.random() * 100 + "%";
+        s.style.animationDuration  = (10 + Math.random() * 14) + "s";
+        s.style.animationDelay     = (Math.random() * 12) + "s";
+        s.style.fontSize = (14 + Math.random() * 10) + "px";
+        box.appendChild(s);
+      }
+    })();
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
 
     function resizeConfettiCanvas() {
       const dpr = Math.max(1, window.devicePixelRatio || 1);
-      confettiCanvas.width = Math.floor(window.innerWidth * dpr);
+      confettiCanvas.width  = Math.floor(window.innerWidth  * dpr);
       confettiCanvas.height = Math.floor(window.innerHeight * dpr);
-      confettiCanvas.style.width = "100vw";
+      confettiCanvas.style.width  = "100vw";
       confettiCanvas.style.height = "100vh";
     }
 
@@ -220,7 +406,6 @@
 
     function fullScreenConfetti() {
       const end = Date.now() + 1600;
-
       (function frame() {
         confettiInstance({
           particleCount: 12,
@@ -251,28 +436,26 @@
     }
 
     /* ---------- NO BUTTON RUNS AWAY ---------- */
-    function clamp(n, min, max) {
-      return Math.max(min, Math.min(max, n));
-    }
+    function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
 
     function moveNo(px, py) {
       const z = zone.getBoundingClientRect();
       const b = noBtn.getBoundingClientRect();
 
       let dx = (b.left + b.width / 2) - px;
-      let dy = (b.top + b.height / 2) - py;
+      let dy = (b.top  + b.height / 2) - py;
       let mag = Math.hypot(dx, dy) || 1;
       dx /= mag;
       dy /= mag;
 
       let newLeft = (b.left - z.left) + dx * 150;
-      let newTop  = (b.top - z.top) + dy * 150;
+      let newTop  = (b.top  - z.top)  + dy * 150;
 
-      newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop  = clamp(newTop, 0, z.height - b.height);
+      newLeft = clamp(newLeft, 0, z.width  - b.width);
+      newTop  = clamp(newTop,  0, z.height - b.height);
 
-      noBtn.style.left = newLeft + "px";
-      noBtn.style.top = newTop + "px";
+      noBtn.style.left      = newLeft + "px";
+      noBtn.style.top       = newTop  + "px";
       noBtn.style.transform = "none";
 
       growYes();
@@ -282,7 +465,7 @@
       const b = noBtn.getBoundingClientRect();
       const d = Math.hypot(
         (b.left + b.width / 2) - e.clientX,
-        (b.top + b.height / 2) - e.clientY
+        (b.top  + b.height / 2) - e.clientY
       );
       if (d < 140) moveNo(e.clientX, e.clientY);
     });
@@ -292,15 +475,20 @@
     /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
+      hint.style.display = "none";
       result.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
     });
+
+    /* ---------- SHOW ITINERARY ---------- */
+    nextBtn.addEventListener("click", () => {
+      document.body.classList.add("scrollable");
+      document.getElementById("itinerary").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("itinerary").scrollIntoView({ behavior: "smooth" });
+      }, 50);
+    });
   </script>
 </body>
 </html>
-
-
-
-  <!-- Confetti library -->
